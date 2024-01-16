@@ -8,7 +8,7 @@ namespace FileInFileLib.Cipher
 	{
 		public long GetNewPosition(byte hide, byte password)
 		{
-			return hide + password;
+			return hide * password;
 		}
 
 		public byte[] SizeToByte(long size)

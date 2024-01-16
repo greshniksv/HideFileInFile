@@ -7,10 +7,13 @@ namespace FileInFileLib.Streams
 	public class SourceStream : IDisposable
 	{
 		private readonly Stream _stream;
+		private long length = 0;
 
 		public SourceStream(Stream stream)
 		{
 			_stream = stream;
+			_stream.Position = 10000;
+			length = _stream.Length;
 		}
 
 		public long Position {
@@ -20,9 +23,10 @@ namespace FileInFileLib.Streams
 		public long Seek(long position)
 		{
 			var newPosition = _stream.Position + position;
-			if (newPosition >= _stream.Length)
+			if (newPosition >= length)
 			{
-				newPosition -= _stream.Length;
+				newPosition -= length;
+				newPosition += 10000;
 			}
 
 			_stream.Position = newPosition;

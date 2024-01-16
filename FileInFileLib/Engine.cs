@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using FileInFileLib.Streams;
 using FileInFileLib.Cipher;
@@ -26,6 +24,12 @@ namespace FileInFileLib
 			using (var sourceStream = File.OpenWrite(sourceFilePath))
 			using (var hideStream = File.OpenRead(hideFilePath))
 			{
+				if (sourceStream.Length < hideStream.Length * 10)
+				{
+					throw new Exception(
+						"Source file should be bigger hide file minimum in 10 times!");
+				}
+
 				var source = new SourceStream(sourceStream);
 				var hide = new HideStream(hideStream);
 				var pwd = new PasswordStream(password);
